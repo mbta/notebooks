@@ -1,0 +1,17 @@
+[project]
+name = "bus-detour-stop-time-investigation"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "duckdb>=1.5.5",
+    "geopandas>=1.1.4",
+    "leafmap>=0.63.0",
+    "marimo>=0.23.15",
+    "numpy>=2.5.1",
+    "pandas>=3.0.5",
+    "polars[pyarrow]>=1.43.1",
+    "requests>=2.34.2",
+    "sqlglot>=30.14.0",
+]

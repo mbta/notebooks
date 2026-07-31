@@ -1,0 +1,87 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.23.15",
+    "script_metadata_hash": null
+  },
+  "cells": [
+    {
+      "id": "zODz",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lSnD",
+      "code_hash": "1c8ee4e83cb469b0c432fbf475b456ee",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "KvBt",
+      "code_hash": "7117e234eceea69bb3cda40099b6add2",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "jNMu",
+      "code_hash": "7ad76e12d0ff9916574c4034171b6f73",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='jNMu-0' random-id='d315a062-f0fe-05fe-e032-2b9c2c18e2e8'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;avg(first_to_second_headway_gap_minutes)&#92;&quot;:12.318468468468467,&#92;&quot;max(first_to_second_headway_gap_minutes)&#92;&quot;:50.016666666666666,&#92;&quot;min(first_to_second_headway_gap_minutes)&#92;&quot;:7.883333333333334,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70503&#92;&quot;,&#92;&quot;year_month_day_hour_min&#92;&quot;:&#92;&quot;2026-07-31 00&#92;&quot;},{&#92;&quot;avg(first_to_second_headway_gap_minutes)&#92;&quot;:0.24,&#92;&quot;max(first_to_second_headway_gap_minutes)&#92;&quot;:0.5333333333333333,&#92;&quot;min(first_to_second_headway_gap_minutes)&#92;&quot;:0.016666666666666666,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70512&#92;&quot;,&#92;&quot;year_month_day_hour_min&#92;&quot;:&#92;&quot;2026-07-31 00&#92;&quot;},{&#92;&quot;avg(first_to_second_headway_gap_minutes)&#92;&quot;:0.375,&#92;&quot;max(first_to_second_headway_gap_minutes)&#92;&quot;:0.4666666666666667,&#92;&quot;min(first_to_second_headway_gap_minutes)&#92;&quot;:0.2833333333333333,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70512&#92;&quot;,&#92;&quot;year_month_day_hour_min&#92;&quot;:&#92;&quot;2026-07-31 01&#92;&quot;},{&#92;&quot;avg(first_to_second_headway_gap_minutes)&#92;&quot;:null,&#92;&quot;max(first_to_second_headway_gap_minutes)&#92;&quot;:null,&#92;&quot;min(first_to_second_headway_gap_minutes)&#92;&quot;:null,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70503&#92;&quot;,&#92;&quot;year_month_day_hour_min&#92;&quot;:&#92;&quot;2026-07-31 01&#92;&quot;},{&#92;&quot;avg(first_to_second_headway_gap_minutes)&#92;&quot;:5.698809523809525,&#92;&quot;max(first_to_second_headway_gap_minutes)&#92;&quot;:5.883333333333334,&#92;&quot;min(first_to_second_headway_gap_minutes)&#92;&quot;:5.683333333333334,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70512&#92;&quot;,&#92;&quot;year_month_day_hour_min&#92;&quot;:&#92;&quot;2026-07-31 02&#92;&quot;},{&#92;&quot;avg(first_to_second_headway_gap_minutes)&#92;&quot;:null,&#92;&quot;max(first_to_second_headway_gap_minutes)&#92;&quot;:null,&#92;&quot;min(first_to_second_headway_gap_minutes)&#92;&quot;:null,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70512&#92;&quot;,&#92;&quot;year_month_day_hour_min&#92;&quot;:&#92;&quot;2026-07-31 04&#92;&quot;},{&#92;&quot;avg(first_to_second_headway_gap_minutes)&#92;&quot;:null,&#92;&quot;max(first_to_second_headway_gap_minutes)&#92;&quot;:null,&#92;&quot;min(first_to_second_headway_gap_minutes)&#92;&quot;:null,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70503&#92;&quot;,&#92;&quot;year_month_day_hour_min&#92;&quot;:&#92;&quot;2026-07-31 05&#92;&quot;},{&#92;&quot;avg(first_to_second_headway_gap_minutes)&#92;&quot;:7.311494252873562,&#92;&quot;max(first_to_second_headway_gap_minutes)&#92;&quot;:12.183333333333334,&#92;&quot;min(first_to_second_headway_gap_minutes)&#92;&quot;:0.0,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70512&#92;&quot;,&#92;&quot;year_month_day_hour_min&#92;&quot;:&#92;&quot;2026-07-31 05&#92;&quot;},{&#92;&quot;avg(first_to_second_headway_gap_minutes)&#92;&quot;:null,&#92;&quot;max(first_to_second_headway_gap_minutes)&#92;&quot;:null,&#92;&quot;min(first_to_second_headway_gap_minutes)&#92;&quot;:null,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70503&#92;&quot;,&#92;&quot;year_month_day_hour_min&#92;&quot;:&#92;&quot;2026-07-31 06&#92;&quot;},{&#92;&quot;avg(first_to_second_headway_gap_minutes)&#92;&quot;:6.303162650602409,&#92;&quot;max(first_to_second_headway_gap_minutes)&#92;&quot;:10.083333333333334,&#92;&quot;min(first_to_second_headway_gap_minutes)&#92;&quot;:0.08333333333333333,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70512&#92;&quot;,&#92;&quot;year_month_day_hour_min&#92;&quot;:&#92;&quot;2026-07-31 06&#92;&quot;}]&quot;' data-total-rows='30' data-total-columns='5' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;avg(first_to_second_headway_gap_minutes)&quot;,[&quot;number&quot;,&quot;f64&quot;]],[&quot;max(first_to_second_headway_gap_minutes)&quot;,[&quot;number&quot;,&quot;f64&quot;]],[&quot;min(first_to_second_headway_gap_minutes)&quot;,[&quot;number&quot;,&quot;f64&quot;]],[&quot;stop_id&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;year_month_day_hour_min&quot;,[&quot;string&quot;,&quot;str&quot;]]]' data-show-filters='true' data-show-download='true' data-show-search='true' data-show-column-summaries='true' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "IVVH",
+      "code_hash": "6750a0112340df4a33680ef61deb68e9",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZrxS",
+      "code_hash": "daab187ff4048767a496bb94c892ebff",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='ZrxS-0' random-id='a097ca38-46b7-b780-7e8b-6d8968ab419c'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;first_headway&#92;&quot;:14.916666666666666,&#92;&quot;second_headway&#92;&quot;:null,&#92;&quot;dt_minutes&#92;&quot;:&#92;&quot;2026-07-30 07&#92;&quot;,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70503&#92;&quot;},{&#92;&quot;first_headway&#92;&quot;:14.733333333333333,&#92;&quot;second_headway&#92;&quot;:null,&#92;&quot;dt_minutes&#92;&quot;:&#92;&quot;2026-07-30 07&#92;&quot;,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70503&#92;&quot;},{&#92;&quot;first_headway&#92;&quot;:14.233333333333333,&#92;&quot;second_headway&#92;&quot;:null,&#92;&quot;dt_minutes&#92;&quot;:&#92;&quot;2026-07-30 07&#92;&quot;,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70503&#92;&quot;},{&#92;&quot;first_headway&#92;&quot;:13.9,&#92;&quot;second_headway&#92;&quot;:null,&#92;&quot;dt_minutes&#92;&quot;:&#92;&quot;2026-07-30 07&#92;&quot;,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70503&#92;&quot;},{&#92;&quot;first_headway&#92;&quot;:14.4,&#92;&quot;second_headway&#92;&quot;:null,&#92;&quot;dt_minutes&#92;&quot;:&#92;&quot;2026-07-30 07&#92;&quot;,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70503&#92;&quot;},{&#92;&quot;first_headway&#92;&quot;:13.233333333333333,&#92;&quot;second_headway&#92;&quot;:null,&#92;&quot;dt_minutes&#92;&quot;:&#92;&quot;2026-07-30 07&#92;&quot;,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70503&#92;&quot;},{&#92;&quot;first_headway&#92;&quot;:9.716666666666667,&#92;&quot;second_headway&#92;&quot;:null,&#92;&quot;dt_minutes&#92;&quot;:&#92;&quot;2026-07-30 08&#92;&quot;,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70503&#92;&quot;},{&#92;&quot;first_headway&#92;&quot;:6.883333333333334,&#92;&quot;second_headway&#92;&quot;:14.883333333333333,&#92;&quot;dt_minutes&#92;&quot;:&#92;&quot;2026-07-30 08&#92;&quot;,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70503&#92;&quot;},{&#92;&quot;first_headway&#92;&quot;:6.733333333333333,&#92;&quot;second_headway&#92;&quot;:14.733333333333333,&#92;&quot;dt_minutes&#92;&quot;:&#92;&quot;2026-07-30 08&#92;&quot;,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70503&#92;&quot;},{&#92;&quot;first_headway&#92;&quot;:5.9,&#92;&quot;second_headway&#92;&quot;:13.9,&#92;&quot;dt_minutes&#92;&quot;:&#92;&quot;2026-07-30 08&#92;&quot;,&#92;&quot;stop_id&#92;&quot;:&#92;&quot;70503&#92;&quot;}]&quot;' data-total-rows='21381' data-total-columns='4' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;first_headway&quot;,[&quot;number&quot;,&quot;f64&quot;]],[&quot;second_headway&quot;,[&quot;number&quot;,&quot;f64&quot;]],[&quot;dt_minutes&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;stop_id&quot;,[&quot;string&quot;,&quot;str&quot;]]]' data-show-filters='true' data-show-download='true' data-show-search='true' data-show-column-summaries='true' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    }
+  ]
+}

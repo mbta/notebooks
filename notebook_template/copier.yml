@@ -1,0 +1,4 @@
+notebook_name:
+    type: str
+    help: What do you want to name this notebook?
+

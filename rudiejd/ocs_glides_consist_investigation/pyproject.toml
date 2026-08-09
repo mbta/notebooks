@@ -1,0 +1,13 @@
+[project]
+name = ""
+version = "0.1.0"
+description = "Marimo Notebook with LAMP!"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "duckdb>=1.5.5",
+    "marimo>=0.23.15",
+    "polars[pyarrow]>=1.43.1",
+    "sqlglot>=30.14.0",
+]
+

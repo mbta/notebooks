@@ -1,8 +1,7 @@
 # ocs_glides_consist_investigation
 
-This is a [Marimo](https://marimo.io/) notebook created by the copier template. It has everything you need for getting started with LAMP and DuckDB
+Report by the Transit Data team analyzing the number of vehicle location pings that we get for the green line by length of the train in each ping.
 
-The repository utilizes `uv` for dependency management, and the configuration for the project is in `pyproject.toml`.
 
 ## Dependencies
 [uv](https://docs.astral.sh/uv/). 

@@ -129,7 +129,7 @@ def _(vehicle_positions):
                     trip_id,
                     stop_sequence,
                     stop_id,
-                    min(feed_timestamp) AS feed_timestamp
+                    min(vehicle_timestamp) AS vehicle_timestamp
                 FROM
                     vehicle_positions
                 GROUP BY ALL
@@ -147,6 +147,7 @@ def _(end_date, start_date):
         SELECT
             trip_update_trip_start_date AS trip_start_date,
             trip_update_trip_trip_id AS trip_id,
+            trip_update_trip_route_id AS route_id,
             trip_update_stop_time_update_stop_sequence AS stop_sequence,
             trip_update_stop_time_update_stop_id AS stop_id,
             to_timestamp(stop_time_update_arrival_time) AS arrival_time,
@@ -161,7 +162,11 @@ def _(end_date, start_date):
             )
         WHERE
             trip_update_trip_revenue = True
-            AND trip_update_stop_time_update_schedule_relationship IS NULL;
+            AND trip_update_stop_time_update_schedule_relationship IS NULL
+            AND route_id NOT LIKE 'CR-%'
+            AND route_id NOT LIKE 'Boat-%'
+            AND route_id NOT LIKE 'Green-%'
+            AND route_id NOT IN ('Red', 'Blue', 'Orange', 'Mattapan');
         """
     )
     return
@@ -252,7 +257,7 @@ def _(predicted_departure_vs_actual_time_past_stop):
         FROM
             predicted_departure_vs_actual_time_past_stop;
         """,
-        output=False,
+        output=False
     )
     return (dwell_seconds_past_prediction,)
 
@@ -355,7 +360,17 @@ def _(last_trip_predictions, vehicle_positions):
             vehicle_timestamp IS NOT NULL AS had_stopped_at
         FROM
             last_trip_predictions
-            LEFT JOIN vehicle_positions ON last_trip_predictions.trip_start_date = vehicle_positions.trip_start_date
+            LEFT JOIN (
+                SELECT
+                    trip_start_date,
+                    trip_id,
+                    stop_sequence,
+                    current_status,
+                    ANY_VALUE(vehicle_timestamp) AS vehicle_timestamp
+                FROM
+                    vehicle_positions
+                GROUP BY ALL
+            ) AS vehicle_positions ON last_trip_predictions.trip_start_date = vehicle_positions.trip_start_date
             AND last_trip_predictions.trip_id = vehicle_positions.trip_id
             AND last_trip_predictions.stop_sequence = vehicle_positions.stop_sequence
             AND vehicle_positions.current_status = 'STOPPED_AT';

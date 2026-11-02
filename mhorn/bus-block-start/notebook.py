@@ -75,7 +75,7 @@ def _():
         f"""
         CREATE OR REPLACE MACRO vehicle_id_is_bus (vehicle_id STRING) AS NOT REGEXP_FULL_MATCH(
             vehicle_id,
-            '\d\d\d\d|G-\d+|[ORB]-[0-9A-F]+|[A-Z ]+'
+            '\\d\\d\\d\\d|G-\d+|[ORB]-[0-9A-F]+|[A-Z ]+'
         );
         """,
         output=False
@@ -302,13 +302,22 @@ def _(end_date, start_date, trips):
 
 
 @app.cell(hide_code=True)
-def _(service_dates, stop_times, trips):
+def _(routes, service_dates, stop_times, trips):
     _df = mo.sql(
         f"""
         CREATE OR REPLACE TABLE block_starts AS
         SELECT
             block_id,
             service_date,
+            arg_min(routes.route_id, coalesce(arrival_time, departure_time)) AS route_id,
+            arg_min(
+                route_short_name,
+                coalesce(arrival_time, departure_time)
+            ) AS route_short_name,
+            arg_min(
+                route_sort_order,
+                coalesce(arrival_time, departure_time)
+            ) AS route_sort_order,
             arg_min(
                 stop_times.trip_id,
                 coalesce(arrival_time, departure_time)
@@ -324,6 +333,9 @@ def _(service_dates, stop_times, trips):
             trips
             NATURAL JOIN service_dates
             JOIN stop_times ON trips.trip_id = stop_times.trip_id
+            JOIN routes ON trips.route_id = routes.route_id
+            AND STRFTIME(service_date, '%Y%m%d')::int >= routes.gtfs_active_date
+            AND STRFTIME(service_date, '%Y%m%d')::int <= routes.gtfs_end_date
         GROUP BY
             block_id,
             service_date;
@@ -398,11 +410,7 @@ def _(date_range):
 @app.cell(hide_code=True)
 def _(block_start_analysis_data):
     _df = (
-        block_start_analysis_data.with_columns(
-            ever_gets_vehicle_assigned=pl.col(
-                "first_prediction_with_vehicle"
-            ).is_null()
-        )
+        block_start_analysis_data
         .group_by(
             pl.col("first_prediction_with_vehicle")
             .is_null()
@@ -430,6 +438,82 @@ def _(block_start_analysis_data):
         )
     )
     _chart
+    return
+
+
+@app.cell(hide_code=True)
+def _(block_start_analysis_data):
+    _df = (
+        block_start_analysis_data.group_by(
+            pl.col("route_id"),
+            pl.col("route_short_name"),
+            pl.col("route_sort_order"),
+        )
+        .agg(
+            total=pl.len(),
+            count_with_vehicle=pl.col("first_prediction_with_vehicle").count(),
+        )
+        .with_columns(
+            count_without_vehicle=pl.col("total")
+            - pl.col("count_with_vehicle"),
+            proportion_without_vehicle=(
+                pl.col("total") - pl.col("count_with_vehicle")
+            )
+            / pl.col("total"),
+        )
+        .sort(pl.col("route_sort_order"))
+    )
+    mo.output.append(
+        alt.Chart(_df)
+        .mark_bar()
+        .encode(
+            x=alt.X(
+                field="route_short_name",
+                type="nominal",
+                sort=None,
+                title="Route",
+            ),
+            y=alt.Y(
+                field="proportion_without_vehicle",
+                type="quantitative",
+                title="Proportion of first-trips-of-blocks with no vehicle ever assigned",
+            ),
+            tooltip=[
+                alt.Tooltip(field="route_short_name"),
+                alt.Tooltip(field="route_id"),
+                alt.Tooltip(field="proportion_without_vehicle", format=".1%"),
+                alt.Tooltip(field="count_without_vehicle"),
+            ],
+        )
+        .properties(
+            height=400,
+            width=1800,
+            title="Relative prevalence of missing block starts by route",
+        )
+    )
+    mo.output.append(
+        alt.Chart(_df)
+        .mark_arc()
+        .encode(
+            color=alt.Color(
+                field="route_short_name", type="nominal", sort=None
+            ),
+            theta=alt.Theta(
+                field="count_without_vehicle", type="quantitative"
+            ),
+            tooltip=[
+                alt.Tooltip(field="route_short_name"),
+                alt.Tooltip(field="route_id"),
+                alt.Tooltip(field="count_without_vehicle"),
+            ],
+        )
+        .properties(
+            height=400,
+            width="container",
+            config={"axis": {"grid": False}},
+            title="Absolute prevalence of missing block starts by route",
+        )
+    )
     return
 
 
@@ -481,6 +565,91 @@ def _(block_start_analysis_data):
                 alt.Tooltip(
                     field="category",
                     title="Minutes of predictions where no vehicle was ever later assigned"
+                ),
+                alt.Tooltip(field="count", title="Trips"),
+            ],
+        )
+        .properties(
+            height=400, width="container", config={"axis": {"grid": True}}
+        )
+    )
+    _chart
+    return
+
+
+@app.cell(hide_code=True)
+def _():
+    mo.md(r"""
+    ### those analyses but ignoring the contracted 712–716
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(block_start_analysis_data):
+    _df = (
+        block_start_analysis_data.filter(
+            pl.col("route_id").is_in(("712", "713", "714", "716")).not_()
+        )
+        .group_by(
+            pl.col("first_prediction_with_vehicle")
+            .is_null()
+            .not_()
+            .alias("Ever gets vehicle assigned")
+        )
+        .agg(pl.len().alias("Trips"))
+    )
+    _chart = (
+        alt.Chart(_df)
+        .mark_arc()
+        .encode(
+            color=alt.Color(
+                field="Ever gets vehicle assigned", type="nominal"
+            ),
+            theta=alt.Theta(field="Trips", type="quantitative"),
+            tooltip=[
+                alt.Tooltip(field="Ever gets vehicle assigned"),
+                alt.Tooltip(field="Trips"),
+                alt.Tooltip(field="Percent", format=".1%"),
+            ],
+        )
+        .transform_joinaggregate(total="sum(Trips)")
+        .transform_calculate(Percent=alt.datum.Trips / alt.datum.total)
+        .properties(
+            height=400, width="container", config={"axis": {"grid": False}}
+        )
+    )
+    _chart
+    return
+
+
+@app.cell(hide_code=True)
+def _(block_start_analysis_data):
+    _col = block_start_analysis_data.filter(
+        pl.col("route_id").is_in(("712", "713", "714", "716")).not_()
+    )["minutes_of_predictions_with_no_vehicle_ever_assigned"]
+    _df = _col.hist(
+        bins=[
+            float(x)
+            for x in range(
+                int(_col.floor().min()), int(_col.ceil().max()) + 1, 1
+            )
+        ]
+    )
+    _chart = (
+        alt.Chart(_df)
+        .mark_bar()
+        .encode(
+            x=alt.X(
+                field="breakpoint",
+                type="quantitative",
+                title="Minutes of predictions where no vehicle was ever later assigned",
+            ),
+            y=alt.Y(field="count", type="quantitative", title="Trips"),
+            tooltip=[
+                alt.Tooltip(
+                    field="category",
+                    title="Minutes of predictions where no vehicle was ever later assigned",
                 ),
                 alt.Tooltip(field="count", title="Trips"),
             ],

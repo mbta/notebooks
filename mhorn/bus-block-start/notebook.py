@@ -672,5 +672,90 @@ def _(block_start_analysis_data):
     return
 
 
+@app.cell(hide_code=True)
+def _():
+    mo.md(r"""
+    ### those analyses but only the contracted 712–716
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(block_start_analysis_data):
+    _df = (
+        block_start_analysis_data.filter(
+            pl.col("route_id").is_in(("712", "713", "714", "716"))
+        )
+        .group_by(
+            pl.col("first_prediction_with_vehicle")
+            .is_null()
+            .not_()
+            .alias("Ever gets vehicle assigned")
+        )
+        .agg(pl.len().alias("Trips"))
+    )
+    _chart = (
+        alt.Chart(_df)
+        .mark_arc()
+        .encode(
+            color=alt.Color(
+                field="Ever gets vehicle assigned", type="nominal"
+            ),
+            theta=alt.Theta(field="Trips", type="quantitative"),
+            tooltip=[
+                alt.Tooltip(field="Ever gets vehicle assigned"),
+                alt.Tooltip(field="Trips"),
+                alt.Tooltip(field="Percent", format=".1%"),
+            ],
+        )
+        .transform_joinaggregate(total="sum(Trips)")
+        .transform_calculate(Percent=alt.datum.Trips / alt.datum.total)
+        .properties(
+            height=400, width="container", config={"axis": {"grid": False}}
+        )
+    )
+    _chart
+    return
+
+
+@app.cell(hide_code=True)
+def _(block_start_analysis_data):
+    _col = block_start_analysis_data.filter(
+        pl.col("route_id").is_in(("712", "713", "714", "716"))
+    )["minutes_of_predictions_with_no_vehicle_ever_assigned"]
+    _df = _col.hist(
+        bins=[
+            float(x)
+            for x in range(
+                int(_col.floor().min()), int(_col.ceil().max()) + 1, 1
+            )
+        ]
+    )
+    _chart = (
+        alt.Chart(_df)
+        .mark_bar()
+        .encode(
+            x=alt.X(
+                field="breakpoint",
+                type="quantitative",
+                title="Minutes of predictions where no vehicle was ever later assigned",
+            ),
+            y=alt.Y(field="count", type="quantitative", title="Trips"),
+            tooltip=[
+                alt.Tooltip(
+                    field="category",
+                    title="Minutes of predictions where no vehicle was ever later assigned",
+                ),
+                alt.Tooltip(field="count", title="Trips"),
+            ],
+        )
+        .properties(
+            height=400, width="container", config={"axis": {"grid": True}}
+        )
+    )
+    _chart
+    return
+
+
 if __name__ == "__main__":
     app.run()

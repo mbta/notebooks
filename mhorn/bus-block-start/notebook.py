@@ -519,8 +519,17 @@ def _(block_start_analysis_data):
 
 @app.cell(hide_code=True)
 def _(block_start_analysis_data):
-    _col = block_start_analysis_data["first_with_vehicle_minutes_before_block_start"]
-    _df = _col.hist(bins=[float(x) for x in range(int(_col.floor().min()), int(_col.ceil().max()) + 1, 1)])
+    _col = block_start_analysis_data[
+        "first_with_vehicle_minutes_before_block_start"
+    ]
+    _df = _col.hist(
+        bins=[
+            float(x)
+            for x in range(
+                int(_col.floor().min()), int(_col.ceil().max()) + 1, 1
+            )
+        ]
+    )
     _chart = (
         alt.Chart(_df)
         .mark_bar()
@@ -528,13 +537,14 @@ def _(block_start_analysis_data):
             x=alt.X(
                 field="breakpoint",
                 type="quantitative",
-                title="Minutes before block start that vehicle was assigned"
+                title="Minutes before block start that vehicle was assigned (negative values denote vehicle assigned only after scheduled block start)",
+                sort="descending",
             ),
             y=alt.Y(field="count", type="quantitative", title="Trips"),
             tooltip=[
                 alt.Tooltip(
                     field="category",
-                    title="Minutes before block start that vehicle was assigned"
+                    title="Minutes before block start that vehicle was assigned",
                 ),
                 alt.Tooltip(field="count", title="Trips"),
             ],
